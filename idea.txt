@@ -7,3 +7,91 @@ Functionality
     There is a social media wall posted for interactions and meetups
     
 AIzaSyAcprhd5QmLB-m7kuxOC5YY-HUP1H1lB64
+
+
+/*
+This Arduino code is designed for use with the Origami Paper Robot.
+It is designed to move the robot along a dark surface, avoiding light areas.
+The code below:
+-Turns on the LED
+-Takes a reflection measurement of the current surface
+-Flashes the LED
+-Moves the robot forward until reflection is too light
+-When the robot runs into an area that is too light it:
+---moves backward briefly
+---rotates back and forth for longer amounts of time until it finds a dark area
+-The robot then continues forward.
+ */
+#include <Servo.h>
+
+Servo servoR;
+Servo servoL;
+const int sensorPin = 1;
+int thermVal, high = 0, low = 1023;
+int trackVal;
+int offset = 10; //buffer for what the sensor considers "dark"
+int leftStop = 17;  //set angle at which the left servo doesn't move
+int rightStop = 16;  //set angle at which the right servo doesn't move
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(A0, OUTPUT); //forces the analog 0 pin to send instead of receive signal
+  trackgrab(); //runs trackgrab code below
+  servoR.attach(9);
+  servoL.attach(6);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  thermVal = analogRead(sensorPin); //reads the output of the light sensor
+ digitalWrite(A0, HIGH); //turns on the LED
+ //If the surface is dark enough, move forward
+ if (thermVal > (trackVal-offset))
+ {
+  //adjust these values to make the wheel speeds match eachother
+ servoL.write(80);
+ servoR.write(0);
+ delay(50);
+ }
+ //If the surface is too light, search for a darker surface
+ else 
+ {
+  //backup
+ servoL.write(0);
+ servoR.write(80);
+ delay(1000);
+ //rotate back and forth at increasing time intervals
+ for (int i=1; i<5; i++){
+  servoL.write(leftStop+8);
+  servoR.write(rightStop+8);
+  delay(500*i);
+  thermVal = analogRead(sensorPin);
+  if (thermVal > (trackVal-offset)){
+    break;
+  }
+  servoL.write(leftStop-8);
+  servoR.write(rightStop-8);
+  delay(1000*i);
+  thermVal = analogRead(sensorPin);
+  if (thermVal > (trackVal-offset)){
+    break;
+  }
+ }
+ delay(50);
+ }
+}
+
+void trackgrab() {
+  /* this turns on the LED, waits 2 seconds, then reads the value off the light sensor, 
+   *  it then flashes the LED to signal that it will begin moving.
+   */
+  digitalWrite(A0, HIGH);
+  delay(2000);
+  trackVal = analogRead(sensorPin);
+  digitalWrite(A0, LOW);
+  delay(500);
+  digitalWrite(A0, HIGH);
+  delay(500);
+  digitalWrite(A0, LOW);
+}
+
