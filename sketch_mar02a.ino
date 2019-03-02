@@ -10,6 +10,8 @@
         GND: GND
  */
 
+//jewel's edit
+
 #include <Servo.h> 
 
 Servo myservo;
@@ -47,45 +49,65 @@ void loop() {
   inches = (duration/2) / 74;   // Divide by 74 or multiply by 0.0135
   Serial.print("here ");
 
-    if (inches <= 1) 
-  {
-//    myservo.attach(8);
-    myservo.write(1);
-//    delay(10);
-//    myservo.detach();
+//     if (inches <= 1) 
+//   {
+// //    myservo.attach(8);
+//     myservo.write(1);
+// //    delay(10);
+// //    myservo.detach();
     
-//    myservo.attach(8);
-//    delay(15);
-//    myservo.write(179);    
-//    delay(10);
-//    myservo.detach(); 
-//    delay(10);
+// //    myservo.attach(8);
+// //    delay(15);
+// //    myservo.write(179);    
+// //    delay(10);
+// //    myservo.detach(); 
+// //    delay(10);
 
-  Serial.print(inches);
-  Serial.print("in, ");
-  Serial.print(cm);
-  Serial.print("cm");
-  Serial.println();
-  }
-  if (inches <= 2) 
-  {
-    myservo.attach(8);
-    myservo.write(1);
-    delay(700);
-    myservo.detach();
-    myservo.attach(8);
-//    delay(15);
-    myservo.write(179);    
-    delay(700);
-    myservo.detach(); 
-    delay(700);
+//   Serial.print(inches);
+//   Serial.print("in, ");
+//   Serial.print(cm);
+//   Serial.print("cm");
+//   Serial.println();
+//   }
+//   if (inches <= 2) 
+//   {
+//     myservo.attach(8);
+//     myservo.write(1);
+//     delay(700);
+//     myservo.detach();
+//     myservo.attach(8);
+// //    delay(15);
+//     myservo.write(179);    
+//     delay(700);
+//     myservo.detach(); 
+//     delay(700);
 
-  Serial.print(inches);
-  Serial.print("in, ");
-  Serial.print(cm);
-  Serial.print("cm");
-  Serial.println();
-  }
+//   Serial.print(inches);
+//   Serial.print("in, ");
+//   Serial.print(cm);
+//   Serial.print("cm");
+//   Serial.println();
+//   }
+//   else if (inches <= 5) 
+//   {
+//     myservo.attach(8);
+//     myservo.write(1);
+//     delay(1000);
+//     myservo.detach();
+//     myservo.attach(8);
+//     delay(15);
+//     myservo.write(179);    
+//     delay(1000);
+//     myservo.detach(); 
+//     delay(1000);
+
+//   Serial.print(inches);
+//   Serial.print("in, ");
+//   Serial.print(cm);
+//   Serial.print("cm");
+//   Serial.println();
+//   }
+
   else if (inches <= 5) 
   {
     myservo.attach(8);
